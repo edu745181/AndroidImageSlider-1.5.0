@@ -25,6 +25,125 @@ Baixe o AndroidImageSlider v1.5.0 hoje e comece a criar experiências visuais qu
 
 📥 Download Agora | 💻 Contribua no GitHub
 
+1. Modificações no build.gradle do Nível do App
+Antes:
+
+A biblioteca Android-Image-Slider verção 1.4.0 estava tentando usar o plugin com.github.dcendents.android-maven, que é obsoleto.
+Depois:
+
+Removi o plugin com.github.dcendents.android-maven.
+Adicionei o plugin maven-publish para gerenciar publicações de artefatos Maven.
+Configurei o bloco publishing para definir a publicação de artefatos.
+Exemplo Final:
+
+gradle
+Copiar código
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+}
+
+android {
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            from components.release
+            groupId = 'com.example'
+            artifactId = 'your-library'
+            version = '1.0.0'
+        }
+    }
+
+    repositories {
+        maven {
+            url = uri('https://your-repo-url')
+        }
+    }
+}
+
+dependencies {
+    // Suas dependências aqui
+}
+2. Modificações no libs.versions.toml
+Antes:
+
+Havia erros relacionados a referências de versões ausentes, como kotlin e android.gradle.plugin.
+Depois:
+
+Definimos as versões necessárias no arquivo libs.versions.toml.
+Criamos referências para os plugins android-application, android-library, e kotlin-android.
+Exemplo Final:
+
+toml
+Copiar código
+[versions]
+android-gradle-plugin = "8.1.0"
+kotlin = "1.9.0"
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
+[libraries]
+# Aqui você pode adicionar outras dependências como appcompat, material, etc.
+3. Modificações no settings.gradle
+Antes:
+
+Você estava recebendo um erro porque o método from foi chamado mais de uma vez ao configurar o versionCatalogs.
+Depois:
+
+Consolidamos a chamada do método from para garantir que todas as definições do catálogo de versões estão em um único arquivo libs.versions.toml.
+Exemplo Final:
+
+gradle
+Copiar código
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            from(files("gradle/libs.versions.toml"))
+        }
+    }
+}
+
+rootProject.name = "YourProjectName"
+include ':app'
+Resumo das Modificações:
+build.gradle do nível do app:
+
+Substituí o plugin com.github.dcendents.android-maven pelo plugin maven-publish.
+Configurei a publicação de artefatos usando o plugin maven-publish.
+libs.versions.toml:
+
+Adicionei definições de versões para android-gradle-plugin e kotlin.
+Configurei os plugins android-application, android-library, e kotlin-android.
+settings.gradle:
+
+Consolidamos a configuração do catálogo de versões em uma única chamada from.
+Essas modificações garantem que o projeto esteja configurado corretamente e compatível com as versões mais recentes do Gradle e do Android Plugin. 
+
 
                                                         ->////////////////////////////////////////////////////////////////<-
 
