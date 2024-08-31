@@ -1,4 +1,9 @@
 # AndroidImageSlider-1.5.0
+Agora pode facilmente carregar imagens com seu layout personalizado, e há muitos tipos de animações incríveis que você pode escolher.
+
+''''groovy
+implementation'com.github.edu745181.AndroidImageSlider-:1.5.0'
+
 Você está pronto para elevar o design dos seus aplicativos Android ao próximo nível? Apresentamos o AndroidImageSlider v1.5.0, uma poderosa biblioteca de código aberto que permite criar sliders de imagens deslumbrantes, modernos e altamente personalizáveis com facilidade.
 Por que escolher o AndroidImageSlider?
 
@@ -161,11 +166,11 @@ This is an amazing image slider for the Android .
 You can easily load images with your custom layout, and there are many kinds of amazing animations you can choose.
 
 ```groovy
-     implementation 'com.github.smarteist:autoimageslider:1.4.0'
+    Old version!!!! implementation 'com.github.smarteist:autoimageslider:1.4.0' 
 ```
 If you are using appcompat libraries use this one, but please migrate to androidx as soon as you can.
 ```groovy
-     implementation 'com.github.smarteist:autoimageslider:1.4.0-appcompat'
+    Old version!!!! implementation 'com.github.smarteist:autoimageslider:1.4.0-appcompat'
 ```
 
 ### New Feautures
